@@ -10,3 +10,7 @@ I would like to give a special thank you to
 
 * My uncle Jan Windelborg Simonsen for helping me with the arduino side and electronics assembly.
 * My dad Michael Windelborg Simonsen for helping me control the pump in my refrigerator using a relay.
+
+## Files
+
+The project Testprogram is a test program made by Jan Windelborg Simonsen to test the hardware, it is not as such used to control the refrigerator.
