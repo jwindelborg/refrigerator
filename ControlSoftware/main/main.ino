@@ -1,4 +1,3 @@
-//#define RELAY_STATE_LED 11
 #define RELAY 7
 
 #define BTN_UP 10
@@ -7,7 +6,8 @@
 
 #define TEMP_SENSOR A0
 
-#define TARGET_TEMP_RAW 979
+#define TARGET_TEMP_RAW 971
+#define TEMP_MARGIN 5
 #define LCD_DELAY 60
 
 #include <Wire.h> 
@@ -23,7 +23,6 @@ int tempSensor = 0;
 int automaticMode = 1;
 
 void setup() {
-  //pinMode(RELAY_STATE_LED, OUTPUT);
   pinMode(RELAY, OUTPUT);
   pinMode(BTN_UP, INPUT);
   pinMode(BTN_DOWN, INPUT);
@@ -50,7 +49,6 @@ void loop() {
     lcd.setCursor(6,1);
     lcd.print("off");
     digitalWrite(RELAY, HIGH);
-    //digitalWrite(RELAY_STATE_LED, LOW);
   }
   
   if(btnDwnState == LOW) {
@@ -59,19 +57,18 @@ void loop() {
     lcd.setCursor(6,1);
     lcd.print("on ");
     digitalWrite(RELAY, LOW);
-    //digitalWrite(RELAY_STATE_LED, HIGH);
   }
 
   if(automaticMode) {
-    // pump on if pump is not on, and temperature is too low
-    if(!relayState && tempSensor < TARGET_TEMP_RAW - 5) {
+    // pump on, if pump is not on, and temperature is too low
+    if(!relayState && tempSensor <= TARGET_TEMP_RAW + TEMP_MARGIN) {
       relayState = 1;
       digitalWrite(RELAY, LOW);
       lcd.setCursor(6,1);
       lcd.print("on ");
     }
-    // pump off if pump is on, and temperature is too high / high enough
-    if(relayState && tempSensor > TARGET_TEMP_RAW) {
+    // pump off, if pump is on, and temperature is too high / high enough
+    if(relayState && tempSensor >= TARGET_TEMP_RAW - TEMP_MARGIN) {
       relayState = 0;
       digitalWrite(RELAY, HIGH);
       lcd.setCursor(6,1);
