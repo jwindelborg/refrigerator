@@ -71,7 +71,7 @@ void loop() {
       lcd.print("on ");
     }
     // pump off if pump is on, and temperature is too high / high enough
-    if(relayState && tempSensor > TARGET_TEMP_RAW + 5) {
+    if(relayState && tempSensor > TARGET_TEMP_RAW) {
       relayState = 0;
       digitalWrite(RELAY, HIGH);
       lcd.setCursor(6,1);
