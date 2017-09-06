@@ -64,14 +64,14 @@ void loop() {
 
   if(automaticMode) {
     // pump on if pump is not on, and temperature is too low
-    if(!relayState && tempSensor < TARGET_TEMP_RAW + 5) {
+    if(!relayState && tempSensor < TARGET_TEMP_RAW - 5) {
       relayState = 1;
       digitalWrite(RELAY, LOW);
       lcd.setCursor(6,1);
       lcd.print("on ");
     }
     // pump off if pump is on, and temperature is too high / high enough
-    if(relayState && tempSensor + 5 > TARGET_TEMP_RAW) {
+    if(relayState && tempSensor > TARGET_TEMP_RAW + 5) {
       relayState = 0;
       digitalWrite(RELAY, HIGH);
       lcd.setCursor(6,1);
